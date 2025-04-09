@@ -39,4 +39,30 @@ router.get('/news/grid', function (req, res, next) {
   });
 });
 
+/* GET List page. */
+router.get('/news/list', function (req, res, next) {
+  const filePath = path.join(__dirname, '../public/data/newsData.json');
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send('파일을 읽는 데 오류가 발생했습니다.');
+    }
+
+    res.send(data);
+  });
+});
+
+/* GET rolling news page. */
+router.get('/news/rolling', function (req, res, next) {
+  const filePath = path.join(__dirname, '../public/data/rollingNewsData.json');
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send('파일을 읽는 데 오류가 발생했습니다.');
+    }
+
+    res.send(data);
+  });
+});
+
 module.exports = router;
