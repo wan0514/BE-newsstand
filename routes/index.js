@@ -21,6 +21,8 @@ router.get('/', function (req, res, next) {
 router.get('/news/grid', function (req, res, next) {
   const filePath = path.join(__dirname, '../public/data/gridData.json');
 
+  const limit = parseInt(req.query.limit) || 96;
+
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).send('파일을 읽는 데 오류가 발생했습니다.');
@@ -30,7 +32,7 @@ router.get('/news/grid', function (req, res, next) {
 
     const shuffledData = shuffleArray(jsonData);
 
-    const slicedData = shuffledData.slice(0, 96);
+    const slicedData = shuffledData.slice(0, limit);
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(slicedData, null, 2));
